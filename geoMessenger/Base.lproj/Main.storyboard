@@ -191,10 +191,10 @@
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="782.15892053973016"/>
         </scene>
-        <!--Tab View Controller-->
+        <!--Main Tab Bar View Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController storyboardIdentifier="tab" id="49e-Tb-3d3" customClass="TabViewController" customModule="geoMessenger" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tab" id="49e-Tb-3d3" customClass="MainTabBarViewController" customModule="geoMessenger" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>

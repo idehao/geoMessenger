@@ -44,7 +44,4 @@ class TablesViewController: UIViewController {
         txtLastname.text = nil
         txtFirstname.text = nil
     }
-    
-    
-    
 }

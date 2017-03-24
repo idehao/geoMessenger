@@ -25,13 +25,11 @@ class TablesTableViewController: UITableViewController {
         //self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    
     func loadDataFromFirebase()
     {
         // where MyUsers is the name of the JSON node/table holding Userinfo
         ref.child("MyUsers").observe(.value, with: { snapshot in
             //print(snapshot.value!)
-            
             var newItems: [UserItem] = []
             
             // loop through the children and append them to the new array
@@ -61,7 +59,6 @@ class TablesTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -85,7 +82,6 @@ class TablesTableViewController: UITableViewController {
 
         return cell
     }
-    /* */
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
@@ -114,14 +110,11 @@ class TablesTableViewController: UITableViewController {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-   /* */
-
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
-            // TODO: Add code to delete it from Firebase
+            // Add code to delete it from Firebase
             let pk = items[indexPath.row].key // get the primary key value for the current item
             ref.child("MyUsers").child(pk).removeValue() // delete by PK from firebase
             
@@ -133,34 +126,4 @@ class TablesTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    /**/
-
-
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    
 }
