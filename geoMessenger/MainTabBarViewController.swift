@@ -1,20 +1,21 @@
 //
-//  TabViewController.swift
+//  MainTabBarViewController.swift
 //  geoMessenger
 //
-//  Created by Ivor D. Addo on 3/13/17.
+//  Created by Ivor D. Addo on 3/24/17.
 //  Copyright © 2017 deHao. All rights reserved.
 //
 
 import UIKit
 
-class TabViewController: UITabBarController {
+class MainTabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        // Do any additional setup after loading the view.
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -25,4 +26,5 @@ class TabViewController: UITabBarController {
         
         //equivalent to: #3498db
     }
+
 }
