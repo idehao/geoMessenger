@@ -112,6 +112,9 @@
 				ACC6D0C41E6397CA005C541B /* MapViewController.swift */,
 				ACC6D0DA1E65D119005C541B /* MapViewExtension.swift */,
 				AC34E5D81E8540CF009B97FD /* MainTabBarViewController.swift */,
+				AC34E5CD1E844647009B97FD /* TablesTabBarViewController.swift */,
+				AC34E5CF1E844A71009B97FD /* TablesTableViewController.swift */,
+				AC34E5D11E844AB7009B97FD /* TablesViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -145,16 +148,6 @@
 			name = CustomControls;
 			sourceTree = "<group>";
 		};
-		AC34E5D31E844B79009B97FD /* Tables */ = {
-			isa = PBXGroup;
-			children = (
-				AC34E5CD1E844647009B97FD /* TablesTabBarViewController.swift */,
-				AC34E5CF1E844A71009B97FD /* TablesTableViewController.swift */,
-				AC34E5D11E844AB7009B97FD /* TablesViewController.swift */,
-			);
-			name = Tables;
-			sourceTree = "<group>";
-		};
 		ACC6D0B61E6397CA005C541B = {
 			isa = PBXGroup;
 			children = (
@@ -181,7 +174,6 @@
 				AC099D601E8632E6004CD83D /* Controllers */,
 				AC099D5F1E8632C1004CD83D /* Layouts */,
 				AC099D5E1E8632A6004CD83D /* Models */,
-				AC34E5D31E844B79009B97FD /* Tables */,
 				ACC6D0CB1E6397CA005C541B /* Assets.xcassets */,
 			);
 			path = geoMessenger;

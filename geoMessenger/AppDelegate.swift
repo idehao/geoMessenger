@@ -24,6 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // enable Firebase offline support
         FIRDatabase.database().persistenceEnabled = true
         
+        // set nav bar style for the App
+        UIApplication.shared.statusBarStyle = .lightContent
+        let navigationBarAppearace = UINavigationBar.appearance()
+        
+        navigationBarAppearace.tintColor = .gray
+        navigationBarAppearace.barTintColor = UIColor(red:0.70, green:0.97, blue:0.91, alpha:1.0)
+        
+        // change navigation item title color
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.gray]
         return true
     }
     
