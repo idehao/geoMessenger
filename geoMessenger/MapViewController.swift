@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import Firebase
 
-class FirstViewController: UIViewController {
+class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     

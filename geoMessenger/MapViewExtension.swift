@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-extension FirstViewController: MKMapViewDelegate {
+extension MapViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? Message {

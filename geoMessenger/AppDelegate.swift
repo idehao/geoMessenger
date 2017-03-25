@@ -18,8 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions
         launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // add this
+        // configure/initialize Firebase
         FIRApp.configure()
+        
+        // enable Firebase offline support
+        FIRDatabase.database().persistenceEnabled = true
+        
         return true
     }
     

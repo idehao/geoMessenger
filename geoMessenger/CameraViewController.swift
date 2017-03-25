@@ -68,7 +68,8 @@ class CameraViewController: UIViewController,
         let metadata = FIRStorageMetadata()
         metadata.contentType = "image/jpeg"
         self.storageRef.child(imagePath)
-            .put(imageData!, metadata: metadata) { [weak self] (metadata, error) in
+            .put(imageData!, metadata: metadata) {  (metadata, error) in
+           // .put(imageData!, metadata: metadata) { [weak self] (metadata, error) in
                 if let error = error {
                     print("Error uploading: \(error)")
                     return
