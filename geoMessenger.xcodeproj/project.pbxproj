@@ -25,6 +25,17 @@
 		AC34E5EC1E854111009B97FD /* TextFieldEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC34E5E21E854111009B97FD /* TextFieldEffects.swift */; };
 		AC34E5ED1E854111009B97FD /* YokoTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC34E5E31E854111009B97FD /* YokoTextField.swift */; };
 		AC34E5EE1E854111009B97FD /* YoshikoTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC34E5E41E854111009B97FD /* YoshikoTextField.swift */; };
+		AC59DA151E925A7E00DEDE3F /* ImageUrlItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC59DA141E925A7E00DEDE3F /* ImageUrlItem.swift */; };
+		AC9E204A1E95E5C60051CA1B /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9E20481E95E5C60051CA1B /* RestKit.framework */; };
+		AC9E204B1E95E5C60051CA1B /* RestKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC9E20481E95E5C60051CA1B /* RestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AC9E204C1E95E5C60051CA1B /* VisualRecognitionV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9E20491E95E5C60051CA1B /* VisualRecognitionV3.framework */; };
+		AC9E204D1E95E5C60051CA1B /* VisualRecognitionV3.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC9E20491E95E5C60051CA1B /* VisualRecognitionV3.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AC9E20511E95E79A0051CA1B /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9E20501E95E79A0051CA1B /* Alamofire.framework */; };
+		AC9E20521E95E79A0051CA1B /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC9E20501E95E79A0051CA1B /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AC9E20541E95EC130051CA1B /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9E20531E95EC130051CA1B /* AlamofireImage.framework */; };
+		AC9E20551E95EC130051CA1B /* AlamofireImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC9E20531E95EC130051CA1B /* AlamofireImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ACA1E92E1E9222E000CE5364 /* PhotoSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA1E92D1E9222E000CE5364 /* PhotoSearchViewController.swift */; };
+		ACA1E9301E92447200CE5364 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA1E92F1E92447200CE5364 /* PhotoCell.swift */; };
 		ACC6D0C31E6397CA005C541B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6D0C21E6397CA005C541B /* AppDelegate.swift */; };
 		ACC6D0C51E6397CA005C541B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6D0C41E6397CA005C541B /* MapViewController.swift */; };
 		ACC6D0C71E6397CA005C541B /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6D0C61E6397CA005C541B /* SecondViewController.swift */; };
@@ -36,6 +47,23 @@
 		ACC6D0DD1E66576F005C541B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACC6D0DC1E66576F005C541B /* GoogleService-Info.plist */; };
 		ACD766951E6C8646007DD36E /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD766941E6C8646007DD36E /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AC9E20461E95DD2F0051CA1B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AC9E204B1E95E5C60051CA1B /* RestKit.framework in Embed Frameworks */,
+				AC9E20521E95E79A0051CA1B /* Alamofire.framework in Embed Frameworks */,
+				AC9E204D1E95E5C60051CA1B /* VisualRecognitionV3.framework in Embed Frameworks */,
+				AC9E20551E95EC130051CA1B /* AlamofireImage.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		AC34E5B31E843519009B97FD /* Tables.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Tables.storyboard; sourceTree = "<group>"; };
@@ -56,6 +84,18 @@
 		AC34E5E21E854111009B97FD /* TextFieldEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldEffects.swift; sourceTree = "<group>"; };
 		AC34E5E31E854111009B97FD /* YokoTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YokoTextField.swift; sourceTree = "<group>"; };
 		AC34E5E41E854111009B97FD /* YoshikoTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoshikoTextField.swift; sourceTree = "<group>"; };
+		AC59DA141E925A7E00DEDE3F /* ImageUrlItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUrlItem.swift; sourceTree = "<group>"; };
+		AC9E20251E95DAF00051CA1B /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../../../../Downloads/VisualRecognition-master/Carthage/Build/iOS/Alamofire.framework"; sourceTree = "<group>"; };
+		AC9E20261E95DAF00051CA1B /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = "../../../../../Downloads/VisualRecognition-master/Carthage/Build/iOS/AlamofireImage.framework"; sourceTree = "<group>"; };
+		AC9E20271E95DAF00051CA1B /* RestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RestKit.framework; path = "../../../../../Downloads/VisualRecognition-master/Carthage/Build/iOS/RestKit.framework"; sourceTree = "<group>"; };
+		AC9E20281E95DAF00051CA1B /* VisualRecognitionV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VisualRecognitionV3.framework; path = "../../../../../Downloads/VisualRecognition-master/Carthage/Build/iOS/VisualRecognitionV3.framework"; sourceTree = "<group>"; };
+		AC9E20481E95E5C60051CA1B /* RestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RestKit.framework; path = ../Carthage/Build/iOS/RestKit.framework; sourceTree = "<group>"; };
+		AC9E20491E95E5C60051CA1B /* VisualRecognitionV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VisualRecognitionV3.framework; path = ../Carthage/Build/iOS/VisualRecognitionV3.framework; sourceTree = "<group>"; };
+		AC9E204E1E95E78F0051CA1B /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		AC9E20501E95E79A0051CA1B /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		AC9E20531E95EC130051CA1B /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = ../Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
+		ACA1E92D1E9222E000CE5364 /* PhotoSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSearchViewController.swift; sourceTree = "<group>"; };
+		ACA1E92F1E92447200CE5364 /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		ACC6D0BF1E6397CA005C541B /* geoMessenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = geoMessenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACC6D0C21E6397CA005C541B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ACC6D0C41E6397CA005C541B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +119,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A2C612B945E00F6FACE19CB /* Pods_geoMessenger.framework in Frameworks */,
+				AC9E20541E95EC130051CA1B /* AlamofireImage.framework in Frameworks */,
+				AC9E204C1E95E5C60051CA1B /* VisualRecognitionV3.framework in Frameworks */,
+				AC9E20511E95E79A0051CA1B /* Alamofire.framework in Frameworks */,
+				AC9E204A1E95E5C60051CA1B /* RestKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				AC34E5D41E851D8D009B97FD /* UserItem.swift */,
+				AC59DA141E925A7E00DEDE3F /* ImageUrlItem.swift */,
 				ACC6D0D61E63F263005C541B /* Message.swift */,
 			);
 			name = Models;
@@ -115,6 +160,8 @@
 				AC34E5CD1E844647009B97FD /* TablesTabBarViewController.swift */,
 				AC34E5CF1E844A71009B97FD /* TablesTableViewController.swift */,
 				AC34E5D11E844AB7009B97FD /* TablesViewController.swift */,
+				ACA1E92D1E9222E000CE5364 /* PhotoSearchViewController.swift */,
+				ACA1E92F1E92447200CE5364 /* PhotoCell.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -148,6 +195,17 @@
 			name = CustomControls;
 			sourceTree = "<group>";
 		};
+		AC9E20471E95DDCB0051CA1B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AC9E20531E95EC130051CA1B /* AlamofireImage.framework */,
+				AC9E20501E95E79A0051CA1B /* Alamofire.framework */,
+				AC9E20481E95E5C60051CA1B /* RestKit.framework */,
+				AC9E20491E95E5C60051CA1B /* VisualRecognitionV3.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		ACC6D0B61E6397CA005C541B = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +227,7 @@
 		ACC6D0C11E6397CA005C541B /* geoMessenger */ = {
 			isa = PBXGroup;
 			children = (
+				AC9E20471E95DDCB0051CA1B /* Frameworks */,
 				AC099D611E8635A9004CD83D /* Config */,
 				AC34E5B51E8436F2009B97FD /* CustomControls */,
 				AC099D601E8632E6004CD83D /* Controllers */,
@@ -182,6 +241,11 @@
 		DC33B9E37AA951E2D5C98DF0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AC9E204E1E95E78F0051CA1B /* Alamofire.framework */,
+				AC9E20251E95DAF00051CA1B /* Alamofire.framework */,
+				AC9E20261E95DAF00051CA1B /* AlamofireImage.framework */,
+				AC9E20271E95DAF00051CA1B /* RestKit.framework */,
+				AC9E20281E95DAF00051CA1B /* VisualRecognitionV3.framework */,
 				B90360EA35D40D7B0019E999 /* Pods_geoMessenger.framework */,
 			);
 			name = Frameworks;
@@ -209,6 +273,7 @@
 				ACC6D0BD1E6397CA005C541B /* Resources */,
 				7EDB6FD370FDB57CAFA48019 /* [CP] Embed Pods Frameworks */,
 				034A1FAE28A724AF9C86C557 /* [CP] Copy Pods Resources */,
+				AC9E20461E95DD2F0051CA1B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -231,7 +296,7 @@
 				TargetAttributes = {
 					ACC6D0BE1E6397CA005C541B = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = V6LC99SL5M;
+						DevelopmentTeam = T7273STZ9Z;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -324,6 +389,7 @@
 			files = (
 				AC34E5EE1E854111009B97FD /* YoshikoTextField.swift in Sources */,
 				AC34E5CE1E844647009B97FD /* TablesTabBarViewController.swift in Sources */,
+				ACA1E9301E92447200CE5364 /* PhotoCell.swift in Sources */,
 				AC34E5E61E854111009B97FD /* HoshiTextField.swift in Sources */,
 				AC34E5D91E8540CF009B97FD /* MainTabBarViewController.swift in Sources */,
 				AC34E5ED1E854111009B97FD /* YokoTextField.swift in Sources */,
@@ -331,9 +397,11 @@
 				AC34E5D01E844A71009B97FD /* TablesTableViewController.swift in Sources */,
 				AC34E5EB1E854111009B97FD /* MinoruTextField.swift in Sources */,
 				AC34E5B71E843720009B97FD /* CustomButton.swift in Sources */,
+				ACA1E92E1E9222E000CE5364 /* PhotoSearchViewController.swift in Sources */,
 				AC34E5EC1E854111009B97FD /* TextFieldEffects.swift in Sources */,
 				ACC6D0D71E63F263005C541B /* Message.swift in Sources */,
 				AC34E5E71E854111009B97FD /* IsaoTextField.swift in Sources */,
+				AC59DA151E925A7E00DEDE3F /* ImageUrlItem.swift in Sources */,
 				AC34E5E51E854111009B97FD /* AkiraTextField.swift in Sources */,
 				ACC6D0C31E6397CA005C541B /* AppDelegate.swift in Sources */,
 				AC34E5EA1E854111009B97FD /* MadokaTextField.swift in Sources */,
@@ -467,8 +535,13 @@
 			baseConfigurationReference = EA2BB17758C0E2989FF1FFC6 /* Pods-geoMessenger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = V6LC99SL5M;
+				DEVELOPMENT_TEAM = T7273STZ9Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = geoMessenger/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dehao.geoMessenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -481,8 +554,13 @@
 			baseConfigurationReference = AE673C614A4451C05171A413 /* Pods-geoMessenger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = V6LC99SL5M;
+				DEVELOPMENT_TEAM = T7273STZ9Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = geoMessenger/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dehao.geoMessenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";

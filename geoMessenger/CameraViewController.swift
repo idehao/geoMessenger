@@ -62,22 +62,37 @@ class CameraViewController: UIViewController,
         UIImageWriteToSavedPhotosAlbum(compressedJPEGImage!, nil, nil, nil)
         
         // save to Firebase Storage
-        let guid = "test_id" // substitute with the current user's ID
+        //let guid =  "test_id" // substitute with the current user's ID
 
+        let guid = UUID().uuidString // STEP 1: Generate new UUID
+
+        
         let imagePath = "\(guid)/\(Int(Date.timeIntervalSinceReferenceDate * 1000)).jpg"
         let metadata = FIRStorageMetadata()
         metadata.contentType = "image/jpeg"
+        
         self.storageRef.child(imagePath)
             .put(imageData!, metadata: metadata) {  (metadata, error) in
-           // .put(imageData!, metadata: metadata) { [weak self] (metadata, error) in
                 if let error = error {
                     print("Error uploading: \(error)")
                     return
                 }
+                
+                // STEP 2b: Get the image URL
+                let imageUrl = metadata?.downloadURL()?.absoluteString
+                
+                // STEP 3: Add code to save the imageURL to the Realtime database
+                var ref: FIRDatabaseReference!
+                ref = FIRDatabase.database().reference()
+                
+                let imageNode : [String : String] = ["ImageUrl": imageUrl!]
+                
+                // add to the Firebase JSON node for MyUsers
+                ref.child("Photos").childByAutoId().setValue(imageNode) /**/
+                
+                // call the function to show the alert
+                self.savePhotoAlert()
         }
-        
-        // call the function to show the alert
-        savePhotoAlert()
     }
 
     @IBAction func btnTakePhoto_TouchUpInside(_ sender: UIButton) {

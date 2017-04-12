@@ -34,11 +34,11 @@ class TablesTableViewController: UITableViewController {
             
             // loop through the children and append them to the new array
             for dbItem in snapshot.children.allObjects {
-                let gItem = (snapshot: dbItem as! FIRDataSnapshot)
+                let gItem = (snapshot: dbItem )
                 //print(gItem.value!)
                 
                 // convert the snapshot JSON value to your Struct type
-                let newValue = UserItem(snapshot: gItem)
+                let newValue = UserItem(snapshot: gItem as! FIRDataSnapshot)
                 newItems.append(newValue)
             }
             
