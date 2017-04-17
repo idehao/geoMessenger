@@ -16,8 +16,11 @@ class PhotoSearchViewController: UIViewController, UICollectionViewDataSource, U
     let apiKey = "d3f64203ddc20d0841b1310d02376d9684aa8668" // plug-in your apiKey from Watson here
     let version = "2017-04-05" // plug-in today’s date here
     let watsonCollectionName = "PhotoCollection" // watson collection id
-    var watsonCollectionId = "PhotoCollection" // watson collection id
+    var watsonCollectionId = "" // watson collection id
     
+    
+    
+    @IBOutlet weak var lblImageCaption: UILabel!
     @IBOutlet weak var btnSearch: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var imgPhoto: UIImageView!
@@ -25,9 +28,13 @@ class PhotoSearchViewController: UIViewController, UICollectionViewDataSource, U
     
     var ref: FIRDatabaseReference!
     var existingImageUrls: [ImageUrlItem] = []
+    var resultsImageUrls: [ImageUrlItem] = []
     var similarImageUrls: [ImageUrlItem] = []
     var newPhotoRecognitionURL: URL!
     var visualRecognition: VisualRecognition!
+    let similarityScoreThrehold = 0.6 // change to see less/more accurate results
+    let maxFirebaseImages: UInt = 15 // set maxmimum number of images to be used from firebase here
+    var firstTimeSearch: Bool = true
     
     @IBAction func btnSearch_Tap(_ sender: UIButton) {
      
@@ -122,17 +129,32 @@ class PhotoSearchViewController: UIViewController, UICollectionViewDataSource, U
         
         dismiss(animated:true, completion: nil)
         
-       
+        self.hideButton()
+        
+        
+        // clear the collectionView first
+        //collectionView.dataSource = nil
+        //
+        
+        //
+        
+        // initialize
+         existingImageUrls = []
+         resultsImageUrls = []
+         similarImageUrls = []
+        collectionView.dataSource = self
+        collectionView.reloadData()
+        
+        self.firstTimeSearch = true
+        lblImageCaption.text = "Searching ..."
         
         performSearch()
         
-       
+        
     }
     
     func performSearch()
     {
-         self.hideButton()
-        
         // STEP 2: MARK - save the test image
         let imageData = UIImageJPEGRepresentation(imgPhoto.image!, 0.8) // compression quality
         let compressedJPEGImage = UIImage(data: imageData!)
@@ -163,7 +185,7 @@ class PhotoSearchViewController: UIViewController, UICollectionViewDataSource, U
                 self.ref = FIRDatabase.database().reference()
                 
                 // get only the latest 15 photos for now
-                self.ref.child("Photos").queryLimited(toLast: 4)
+                self.ref.child("Photos").queryLimited(toLast: self.maxFirebaseImages)
                     .observe(.value, with: { snapshot in
                     
                     // loop through the children and append them to the new array
@@ -181,57 +203,118 @@ class PhotoSearchViewController: UIViewController, UICollectionViewDataSource, U
                     // MARK - CALL IBM Watson here
                     self.visualRecognition = VisualRecognition(apiKey: self.apiKey, version: self.version)
                     
-
                     // MARK - classify the curent Image
                     self.classifyImage()
                     
-                    
-                    // MARK - create a collection
+                    // MARK - create a collection; Create one-time via CURL or PostMan; gt the ID and use it
                    self.createCollection()
-                    
-                    // MARK - Add images to the Watson collection
-                    for existingImageUrlItem in self.existingImageUrls {
-                        
-                        print(existingImageUrlItem.imageUrl)
-                        self.addCurrentImageToCollection(imageURL: URL(string: existingImageUrlItem.imageUrl)!)
-                    }
 
-                    // MARK - Find Similar Images
-                    self.findSimilarImages()
-                    
-                    // MARK - Eventually permanently store new photo reports to the collection and eliminate the programmatic createCollection and removeCollection calls
-                   
-                        
-                        
-                    // TODO:
-                    print(self.similarImageUrls)
-
-                    //self.showButton()
-                    
-                    self.collectionView.reloadData()
                 })
         }
-         self.showButton()
-
+         //self.showButton()
     }
     
     
     func createCollection()
     {
         // create a collection and
-        self.visualRecognition.createCollection(withName: self.watsonCollectionName, success: { (collection) in
-            
-            self.watsonCollectionId = collection.collectionID
-            print("Collection Created")
-            print(self.watsonCollectionName)
-            print(self.watsonCollectionId)
+        self.visualRecognition.createCollection(withName: self.watsonCollectionName,
+                        failure: { (error) in
+                            print("Collection Failed:  \(error)")
+                        },
+                        success: { (collection) in
+                            self.watsonCollectionId = collection.collectionID
+                            print("Collection Created:  \(collection.collectionID)")
+                                                    
+                            // MARK - Add images to the Watson collection
+                            for existingImageUrlItem in self.existingImageUrls {
+                                                        
+                                print(existingImageUrlItem.imageUrl)
+                                self.addCurrentImageToCollection(imageURL: URL(string: existingImageUrlItem.imageUrl)!)
+                                
+                            }
+                                                    
+                            // MARK - Find Similar Images
+                            self.visualRecognition.findSimilarImages(toImageFile: self.newPhotoRecognitionURL!,
+                                             inCollectionID: self.watsonCollectionId,
+                                             limit: 9,
+                                             failure: { (searchError) in
+                                                DispatchQueue.main.async {
+                                                    // show alert of failure
+                                                    let ac = UIAlertController(title: "Watson Search Failed!", message:"Your photo search was not successful. Try again later. Error Code: \(searchError)", preferredStyle: .alert)
+                                                    ac.addAction(UIAlertAction(title: "OK", style: .default))
+                                                    self.present(ac, animated: true)
+                                                }
+                                                //
+                                                print(searchError)
+                                                self.removeCollection()
+                                            },
+                                             success: { similarImageList in
+                                                // similar images were found
+                                                self.firstTimeSearch = false
+                                                
+                                                if let classifiedImage = similarImageList.similarImages.first
+                                                {
+                                                    // show score of first item
+                                                    print("Classification Score: \(classifiedImage.score!)")
+                                                    
+                                                    //  list is already sorted
+                                                    //similarImageList = similarImageList.similarImages.sorted(by: .score)
+                                                    var counter = 1
+                                                    // loop through the children and append them to the new array
+                                                    for similarImageItem in similarImageList.similarImages {
+                                                        
+                                                        // check if the image score is above the threshold
+                                                        if (similarImageItem.score! > self.similarityScoreThrehold){
+                                                        
+                                                            print("Classification Score: \(similarImageItem.score!)")
+                                                            
+                                                            for resultsImageItem in self.resultsImageUrls
+                                                            {
+                                                                if resultsImageItem.watsonCollectionImageUrl == similarImageItem.imageFile
+                                                                {
+                                                                    // convert the snapshot JSON value to your Struct type
+                                                                    let newValue = ImageUrlItem(imageUrl: resultsImageItem.imageUrl, key: String(counter), watsonCollectionImageUrl: similarImageItem.imageFile, score: similarImageItem.score!)
+                                                                    
+                                                                    print(newValue.imageUrl)
+                                                                    self.similarImageUrls.append(newValue)
+                                                                }
+                                                            }
+                                                            counter += 1
+                                                        }
+                                                    }
+                                                    
+                                                    // show images in collectionView
+                                                    DispatchQueue.main.async {
+                                                        self.showButton()
+                                                        self.collectionView.reloadData()
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    DispatchQueue.main.async {
+                                                        // show alert of failure
+                                                        let ac = UIAlertController(title: "Photo Search Results", message:"No match was found", preferredStyle: .alert)
+                                                        ac.addAction(UIAlertAction(title: "OK", style: .default))
+                                                        self.present(ac, animated: true)
+                                                    }
+                                                }
+                                                self.removeCollection()
+                                                self.showButton()
+                                        })
+                                                    
+                            // TODO:
+                            print(self.similarImageUrls)
+                            
+
         })
+
     }
     
     func removeCollection()
     {
         // create a collection and
-        self.visualRecognition.deleteCollection(withID: self.watsonCollectionId)
+         self.visualRecognition.deleteCollection(withID: self.watsonCollectionId)
          print("Collection Removed")
     }
     
@@ -240,62 +323,74 @@ class PhotoSearchViewController: UIViewController, UICollectionViewDataSource, U
         // create a collection and
         self.visualRecognition.addImageToCollection(withID: self.watsonCollectionId, imageFile: imageURL) { (colImages) in
             // number of images
-            print(colImages.collectionImages.count)
+            print("Images added: \(colImages.collectionImages.count)")
+            
+            // add images to new collection for display
+            for existingItem in self.existingImageUrls
+            {
+                if String(describing: imageURL) == existingItem.imageUrl
+                {
+                    let newValue = ImageUrlItem(imageUrl: existingItem.imageUrl, key: String(colImages.collectionImages.count), watsonCollectionImageUrl: colImages.collectionImages[0].imageFile)
+                    self.resultsImageUrls.append(newValue)
+                }
+            }
         }
     }
     
     
-    func findSimilarImages()
-    {
-        print(newPhotoRecognitionURL! )
-        print (self.watsonCollectionId)
-        
-        self.visualRecognition.findSimilarImages(toImageFile: newPhotoRecognitionURL!,
-                                                 inCollectionID: self.watsonCollectionId,
-                                                 limit: 9,
-        failure: { (searchError) in
-                                                    //
-                                                    print(searchError)
-            self.removeCollection()
-        },
-        success: { similarImageList in
-        
-        //self.visualRecognition.findSimilarImages(toImageFile: newPhotoRecognitionURL!, inCollectionID: self.watsonCollectionId, success: { similarImageList in
-            //
-            
-            if let classifiedImage = similarImageList.similarImages.first
-            {
-                print(classifiedImage.score!)
-                
-                var counter = 1
-                // loop through the children and append them to the new array
-                for similarImageItem in similarImageList.similarImages {
-                    
-                    // only get top 9 similar images
-                    //if counter < 9
-                    //{
-                        // convert the snapshot JSON value to your Struct type
-                        let newValue = ImageUrlItem.init(imageUrl: similarImageItem.imageFile, key: String(counter))
-                        self.similarImageUrls.append(newValue)
-                        counter += 1
-                    //}
-                }
-            }
-            else
-            {
-                DispatchQueue.main.async {
-                    // show alert of failure
-                    let ac = UIAlertController(title: "Photo Search Failed!", message:"Your photo search was not successful. Try again later", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style: .default))
-                    self.present(ac, animated: true)
-                }
-            }
-            self.removeCollection()
-            
-        })
-        
-        
-    }
+//    func findSimilarImages()
+//    {
+//        print(newPhotoRecognitionURL! )
+//        print (self.watsonCollectionId)
+//        
+//        self.visualRecognition.findSimilarImages(toImageFile: newPhotoRecognitionURL!,
+//                                                 inCollectionID: self.watsonCollectionId,
+//                                                 limit: 9,
+//        failure: { (searchError) in
+//            DispatchQueue.main.async {
+//                // show alert of failure
+//                let ac = UIAlertController(title: "Watson Search Failed!", message:"Your photo search was not successful. Try again later. Error Code: \(searchError)", preferredStyle: .alert)
+//                ac.addAction(UIAlertAction(title: "OK", style: .default))
+//                self.present(ac, animated: true)
+//            }
+//                                                    //
+//            print(searchError)
+//            self.removeCollection()
+//        },
+//        success: { similarImageList in
+//        
+//        //self.visualRecognition.findSimilarImages(toImageFile: newPhotoRecognitionURL!, inCollectionID: self.watsonCollectionId, success: { similarImageList in
+//            //
+//            
+//            if let classifiedImage = similarImageList.similarImages.first
+//            {
+//                print(classifiedImage.score!)
+//                
+//                var counter = 1
+//                // loop through the children and append them to the new array
+//                for similarImageItem in similarImageList.similarImages {
+//                        // convert the snapshot JSON value to your Struct type
+//                        let newValue = ImageUrlItem.init(imageUrl: similarImageItem.imageFile, key: String(counter))
+//                        self.similarImageUrls.append(newValue)
+//                        counter += 1
+//                    //}
+//                }
+//            }
+//            else
+//            {
+//                DispatchQueue.main.async {
+//                    // show alert of failure
+//                    let ac = UIAlertController(title: "Photo Search Failed!", message:"Your photo search was not successful. Try again later", preferredStyle: .alert)
+//                    ac.addAction(UIAlertAction(title: "OK", style: .default))
+//                    self.present(ac, animated: true)
+//                }
+//            }
+//            self.removeCollection()
+//            
+//        })
+//        
+//        
+//    }
     
     func classifyImage()
     {
@@ -324,7 +419,7 @@ class PhotoSearchViewController: UIViewController, UICollectionViewDataSource, U
                     
                     DispatchQueue.main.async {
                         // success: show the results in the title bar
-                        self.title = results
+                        self.lblImageCaption.text = "Tag: \(results)"
                         
                     }
                     
@@ -351,6 +446,8 @@ class PhotoSearchViewController: UIViewController, UICollectionViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        firstTimeSearch = true
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         activityIndicator.isHidden = true
@@ -374,22 +471,54 @@ class PhotoSearchViewController: UIViewController, UICollectionViewDataSource, U
         //cell.label.text = "item \(indexPath.item)"
         
            // on page load when we have no search results, show nothing
-           if similarImageUrls.count > 0 {
+        if similarImageUrls.count > 0 {
+            
+            print(indexPath.row)
+            print(similarImageUrls.count)
+            if (indexPath.row < similarImageUrls.count){
+            
                 let image = self.similarImageUrls[indexPath.row]
-            
-            // get image asynchronously via URL
-            let url = URL(string: image.imageUrl)
-            
-            DispatchQueue.global().async {
-                //let data = try? Data(contentsOf: url!)
-                //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-                DispatchQueue.main.async {
-                    cell.imgPhoto.af_setImage(withURL: url!) // change to this after alamofire is added
-                    //cell.imgPhoto.image = UIImage(data: data!)
+                
+                // get image asynchronously via URL
+                let url = URL(string: image.imageUrl)
+                
+                print(url!)
+                
+                DispatchQueue.global().async {
+                    //let data = try? Data(contentsOf: url!)
+                    //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                    DispatchQueue.main.async {
+                        cell.imgPhoto.af_setImage(withURL: url!) // change to this after alamofire is added
+                        //cell.imgPhoto.image = UIImage(data: data!)
+                    }
                 }
+                cell.lblScore.isHidden = false
+                cell.lblScore.text = "Score: \(NSString(format: "%.2f", (image.score * 100)) as String)%"
             }
-
+            else
+            {
+                // show the placeholder image instead
+                cell.imgPhoto.image = UIImage(named: "profile_photo")
+                cell.lblScore.isHidden = true
+                cell.lblScore.text = "0.00%"
+            }
         }
+        else
+        {
+            // show the placeholder image instead
+            cell.imgPhoto.image = UIImage(named: "profile_photo")
+            cell.lblScore.isHidden = true
+            cell.lblScore.text = "0.00%"
+            
+            // when we get to the last image, and it is not the first time load
+            if (indexPath.row == 8 && !firstTimeSearch){
+                // show nothing found alert here
+                let ac = UIAlertController(title: "Photo Search Completed!", message:"No macthing photo found!", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(ac, animated: true)
+            }
+        }
+        
         return cell
     }
     

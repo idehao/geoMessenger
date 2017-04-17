@@ -13,18 +13,24 @@ struct ImageUrlItem {
     
     let key: String
     let imageUrl: String
+    let watsonCollectionImageUrl: String
+    let score: Double
     let ref: FIRDatabaseReference?
     
-    init(imageUrl: String, key: String = "") {
+    init(imageUrl: String, key: String = "", watsonCollectionImageUrl: String = "", score: Double = 0) {
         self.key = key
         self.imageUrl = imageUrl
+        self.watsonCollectionImageUrl = watsonCollectionImageUrl
         self.ref = nil
+        self.score = score
     }
     
     init(snapshot: FIRDataSnapshot) {
         key = snapshot.key
         let snapshotValue = snapshot.value as! [String: AnyObject]
         imageUrl = snapshotValue["ImageUrl"] as! String // must map to firebase names
+        watsonCollectionImageUrl = ""
+        score = 0
         ref = snapshot.ref
     }
     
