@@ -11,6 +11,5 @@ import UIKit
 class PhotoCell: UICollectionViewCell {
     
     @IBOutlet weak var lblScore: UILabel!
-    
     @IBOutlet weak var imgPhoto: UIImageView!
 }
